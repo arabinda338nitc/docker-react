@@ -1,0 +1,22 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    container:
+      image: docker:stable
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Build and test
+        run: |
+          docker build -t arabinda338nitc/docker-react -f Dockerfile.dev .
+          docker run arabinda338nitc/docker-react npm run test -- --coverage
